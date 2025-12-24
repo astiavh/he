@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn | The Hidden Enneagram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background:#0a0a0a; color:#e5e5e5 }
+        .serif { font-family: 'Cormorant Garamond', serif }
+        a:focus, button:focus { outline: 3px solid rgba(255,255,255,0.12); outline-offset: 3px; }
+        .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+        .skip-link:focus { position: fixed; left: 1rem; top: 1rem; width: auto; height: auto; overflow: visible; background:#fff; color:#000; padding:6px 8px; z-index:1000; border-radius:4px; }
+    </style>
+</head>
+<body class="bg-[#0a0a0a]">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <nav class="fixed w-full z-50 bg-[#0a0a0a]/95 backdrop-blur-md px-6 py-5 flex justify-between items-center border-b border-white/5">
+        <div class="text-xl tracking-[0.3em] uppercase font-light text-white">The <span class="font-bold">Hidden</span> Enneagram</div>
+        <div class="hidden md:flex gap-10 text-[10px] uppercase tracking-[0.2em] font-medium">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="index.html" class="nav-link">Learn</a>
+            <a href="../about.html" class="nav-link">About</a>
+            <a href="../services.html" class="nav-link">Services</a>
+        </div>
+        <div class="md:hidden">
+            <button id="menu-btn" class="p-2" aria-expanded="false" aria-controls="mobile-menu">☰</button>
+        </div>
+    </nav>
+
+    <main id="main-content" class="pt-36 max-w-5xl mx-auto px-6">
+        <h1 class="serif text-5xl italic mb-6">Learn</h1>
+        <p class="text-stone-400 mb-8">A comprehensive framework for understanding the mechanisms of identity. Explore the layers of the system.</p>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <a href="core-types/index.html" class="p-6 border border-white/5 hover:border-white/40">Core Types<br><span class="text-sm text-stone-400">The nine archetypes and their orientations</span></a>
+            <a href="centers.html" class="p-6 border border-white/5 hover:border-white/40">Centers of Energy<br><span class="text-sm text-stone-400">The Gut, the Heart, and the Head</span></a>
+            <a href="core-fixation.html" class="p-6 border border-white/5 hover:border-white/40">Core Fixation<br><span class="text-sm text-stone-400">How looping responses arise</span></a>
+            <a href="wings.html" class="p-6 border border-white/5 hover:border-white/40">Wings<br><span class="text-sm text-stone-400">Adjacent type influences</span></a>
+            <a href="triads.html" class="p-6 border border-white/5 hover:border-white/40">Triads<br><span class="text-sm text-stone-400">Object relations, Hornevian groups, Harmonic triads</span></a>
+            <a href="instinctual-realities.html" class="p-6 border border-white/5 hover:border-white/40">The Instinctual Realities<br><span class="text-sm text-stone-400">Self-preservation, Sexual, Social</span></a>
+        </div>
+
+        <footer class="text-sm text-stone-500 mt-20">© TheHiddenEnneagram 2025 • All Rights Reserved</footer>
+    </main>
+        <script>
+                const menuBtn = document.getElementById('menu-btn');
+                if (menuBtn) {
+                        menuBtn.addEventListener('click', () => {
+                                const mobileMenu = document.createElement('div');
+                                mobileMenu.id = 'mobile-menu';
+                                mobileMenu.className = 'fixed inset-0 bg-black z-[100] p-10 flex flex-col gap-8 text-xl uppercase tracking-widest font-light overflow-y-auto custom-scrollbar';
+                                mobileMenu.setAttribute('role', 'dialog');
+                                mobileMenu.setAttribute('aria-modal', 'true');
+                                mobileMenu.setAttribute('aria-label', 'Main Menu');
+                                mobileMenu.innerHTML = `
+                                        <button id="close-menu" class="absolute top-6 right-6 text-stone-500 text-2xl" aria-label="Close menu">✕</button>
+                                        <a href="../index.html" class="text-white border-b border-white/5 pb-2">Home</a>
+                                        <div class="flex flex-col gap-4">
+                                                <span class="text-stone-600 text-xs uppercase tracking-widest">Learn</span>
+                                                <a href="index.html" class="pl-4 text-stone-300">Core Types</a>
+                                                <a href="centers.html" class="pl-4 text-stone-300">Centers of Energy</a>
+                                                <a href="core-fixation.html" class="pl-4 text-stone-500">Core Fixation</a>
+                                                <a href="wings.html" class="pl-4 text-stone-500">Wings</a>
+                                                <a href="triads.html" class="pl-4 text-stone-500">Triads</a>
+                                                <a href="instinctual-realities.html" class="pl-4 text-stone-500">Instinctual Realities</a>
+                                        </div>
+                                        <a href="../about.html" class="text-white border-b border-white/5 pb-2">About</a>
+                                        <a href="../services.html" class="text-white border-b border-white/5 pb-2">Services</a>
+                                `;
+                                document.body.appendChild(mobileMenu);
+                                // announce menu open and set button state
+                                menuBtn.setAttribute('aria-expanded','true');
+                                // focus the first link for keyboard users
+                                const firstLink = mobileMenu.querySelector('a');
+                                if (firstLink) firstLink.focus();
+
+                                // Close menu when clicking outside content (click on backdrop)
+                                mobileMenu.addEventListener('click', (evt) => {
+                                    if (evt.target === mobileMenu) {
+                                        mobileMenu.remove();
+                                        menuBtn.setAttribute('aria-expanded','false');
+                                        document.removeEventListener('keydown', handleKeydown);
+                                        menuBtn.focus();
+                                    }
+                                });
+
+                                // Focus trap for keyboard users
+                                const focusableSelectors = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+                                const focusable = Array.from(mobileMenu.querySelectorAll(focusableSelectors));
+                                const firstFocusable = focusable[0];
+                                const lastFocusable = focusable[focusable.length - 1];
+
+                                function handleKeydown(e) {
+                                    if (e.key === 'Escape') {
+                                        mobileMenu.remove();
+                                        menuBtn.setAttribute('aria-expanded','false');
+                                        menuBtn.focus();
+                                        document.removeEventListener('keydown', handleKeydown);
+                                    }
+
+                                    if (e.key === 'Tab') {
+                                        if (focusable.length === 0) {
+                                            e.preventDefault();
+                                            return;
+                                        }
+                                        // shift + tab
+                                        if (e.shiftKey && document.activeElement === firstFocusable) {
+                                            e.preventDefault();
+                                            lastFocusable.focus();
+                                        } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+                                            e.preventDefault();
+                                            firstFocusable.focus();
+                                        }
+                                    }
+                                }
+
+                                document.addEventListener('keydown', handleKeydown);
+
+                                // Close handlers for close button and menu links
+                                const closeBtn = document.getElementById('close-menu');
+                                if (closeBtn) closeBtn.addEventListener('click', () => { mobileMenu.remove(); menuBtn.setAttribute('aria-expanded','false'); menuBtn.focus(); document.removeEventListener('keydown', handleKeydown); });
+                                const links = mobileMenu.querySelectorAll('a');
+                                links.forEach((l) => l.addEventListener('click', () => { mobileMenu.remove(); menuBtn.setAttribute('aria-expanded','false'); document.removeEventListener('keydown', handleKeydown); }));
+                        });
+                }
+        </script>
+</body>
+</html>
