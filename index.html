@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hidden Enneagram | Matt Ahrens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a3a3a3;
+            --accent: #d4d4d8;
+            --border: #262626;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4, .serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,1) 100%);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--text-primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Dropdown Logic */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #0f0f0f;
+            min-width: 220px;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 0;
+            z-index: 100;
+        }
+        .dropdown:hover > .dropdown-content {
+            display: block;
+        }
+        .nested-dropdown {
+            position: relative;
+        }
+        .nested-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: -1px;
+            background-color: #0f0f0f;
+            min-width: 120px;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 0;
+        }
+        .nested-dropdown:hover > .nested-content {
+            display: block;
+        }
+
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--border);
+        }
+
+        /* Hover Reveal Styles */
+        .learn-card {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .learn-card:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden custom-scrollbar text-stone-300">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#0a0a0a]/95 backdrop-blur-md px-6 py-5 flex justify-between items-center border-b border-white/5">
+        <div class="text-xl tracking-[0.3em] uppercase font-light text-white">
+            The <span class="font-bold">Hidden</span> Enneagram
+        </div>
+        
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex gap-10 text-[10px] uppercase tracking-[0.2em] font-medium">
+            <a href="#home" class="nav-link">Home</a>
+            
+            <!-- Learn Dropdown -->
+            <div class="dropdown relative group">
+                <a href="#learn-index" class="nav-link">
+                    Learn
+                    <svg class="w-2 h-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </a>
+                <div class="dropdown-content mt-2 shadow-2xl">
+                    <!-- Core Types with Nested -->
+                    <div class="nested-dropdown px-6 py-2 hover:bg-white/5 flex justify-between items-center group/nested">
+                        <a href="#core-types" class="block w-full">Core Types</a>
+                        <svg class="w-2 h-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <div class="nested-content shadow-2xl">
+                            <a href="#" class="block px-6 py-2 hover:bg-white/5">1</a>
+                            <a href="#" class="block px-6 py-2 hover:bg-white/5">2</a>
+                            <a href="#" class="block px-6 py-2 hover:bg-white/5">3</a>
+                            <a href="#" class="block px-6 py-2 hover:bg-white/5">4</a>
+                            <a href="#" class="block px-6 py-2 hover:bg-white/5">5</a>
+                            <a href="#" class="block px-6 py-2 hover:bg-white/5">6</a>
+                            <a href="#" class="block px-6 py-2 hover:bg-white/5">7</a>
+                            <a href="#type-eight" class="block px-6 py-2 hover:bg-white/10 text-white font-semibold">8</a>
+                            <a href="#type-nine" class="block px-6 py-2 hover:bg-white/10 text-white font-semibold">9</a>
+                        </div>
+                    </div>
+                    <a href="#centers" class="block px-6 py-2 hover:bg-white/5">Centers of Energy</a>
+                    <a href="#" class="block px-6 py-2 hover:bg-white/5">Core Fixation</a>
+                    <a href="#" class="block px-6 py-2 hover:bg-white/5">Wings</a>
+                    <a href="#" class="block px-6 py-2 hover:bg-white/5">Triads</a>
+                    <a href="#" class="block px-6 py-2 hover:bg-white/5 text-nowrap">The Instinctual Realities</a>
+                </div>
+            </div>
+
+            <a href="#about" class="nav-link">About</a>
+            <a href="#services" class="nav-link">Services</a>
+        </div>
+
+        <div class="md:hidden">
+            <button id="menu-btn" class="p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1449156003053-c3d8c0f110bc?q=80&w=2000&auto=format&fit=crop" alt="Abstract Lines" class="w-full h-full object-cover opacity-30 grayscale contrast-125">
+            <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <h2 class="text-[10px] uppercase tracking-[0.6em] mb-10 opacity-50">Mapping the Architecture of the Split</h2>
+            <h1 class="text-6xl md:text-9xl serif mb-8 leading-[0.9] text-white">Beyond <br><span class="italic">Fixation</span></h1>
+            <p class="text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed text-stone-400">
+                The Enneagram is a map of how each individual's core motivations are unconsciously formulated into a recurring psychological fixation.
+            </p>
+            <div class="mt-16">
+                <a href="#learn-index" class="inline-block border border-white/20 hover:border-white px-12 py-4 text-[10px] uppercase tracking-[0.3em] transition duration-500 text-white">The Journey Inward</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learn Index Section -->
+    <section id="learn-index" class="py-32 px-6 md:px-20 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 section-fade-in">
+                <span class="text-[10px] uppercase tracking-[0.6em] text-stone-500 mb-4 block">Education</span>
+                <h2 class="text-5xl md:text-7xl serif italic mb-8 text-white">Learn</h2>
+                <p class="text-stone-500 max-w-2xl font-light tracking-wide text-lg">
+                    A comprehensive framework for understanding the mechanisms of identity. Explore the layers of the system.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 section-fade-in">
+                <!-- Core Types -->
+                <a href="#core-types" class="learn-card p-10 flex flex-col justify-between group h-80">
+                    <div>
+                        <span class="text-[9px] uppercase tracking-[0.4em] text-stone-600">01</span>
+                        <h3 class="text-3xl serif italic mt-4 text-stone-200 group-hover:text-white transition">Core Types</h3>
+                    </div>
+                    <p class="text-stone-500 text-sm font-light leading-relaxed">The nine distinct psychological archetypes and their fundamental orientations.</p>
+                </a>
+
+                <!-- Centers of Energy -->
+                <a href="#centers" class="learn-card p-10 flex flex-col justify-between group h-80">
+                    <div>
+                        <span class="text-[9px] uppercase tracking-[0.4em] text-stone-600">02</span>
+                        <h3 class="text-3xl serif italic mt-4 text-stone-200 group-hover:text-white transition">Centers of Energy</h3>
+                    </div>
+                    <p class="text-stone-500 text-sm font-light leading-relaxed">The Gut, Heart, and Head—foundational systems of processing reality.</p>
+                </a>
+
+                <!-- Core Fixation -->
+                <a href="#" class="learn-card p-10 flex flex-col justify-between group h-80">
+                    <div>
+                        <span class="text-[9px] uppercase tracking-[0.4em] text-stone-600">03</span>
+                        <h3 class="text-3xl serif italic mt-4 text-stone-200 group-hover:text-white transition">Core Fixation</h3>
+                    </div>
+                    <p class="text-stone-500 text-sm font-light leading-relaxed">Understanding the mental and emotional habits that anchor the personality.</p>
+                </a>
+
+                <!-- Wings -->
+                <a href="#" class="learn-card p-10 flex flex-col justify-between group h-80">
+                    <div>
+                        <span class="text-[9px] uppercase tracking-[0.4em] text-stone-600">04</span>
+                        <h3 class="text-3xl serif italic mt-4 text-stone-200 group-hover:text-white transition">Wings</h3>
+                    </div>
+                    <p class="text-stone-500 text-sm font-light leading-relaxed">How adjacent types flavor and nuance the expression of the core type.</p>
+                </a>
+
+                <!-- Triads -->
+                <a href="#" class="learn-card p-10 flex flex-col justify-between group h-80">
+                    <div>
+                        <span class="text-[9px] uppercase tracking-[0.4em] text-stone-600">05</span>
+                        <h3 class="text-3xl serif italic mt-4 text-stone-200 group-hover:text-white transition">Triads</h3>
+                    </div>
+                    <p class="text-stone-500 text-sm font-light leading-relaxed">Groupings that reveal common underlying tensions and defensive styles.</p>
+                </a>
+
+                <!-- Instinctual Realities -->
+                <a href="#" class="learn-card p-10 flex flex-col justify-between group h-80">
+                    <div>
+                        <span class="text-[9px] uppercase tracking-[0.4em] text-stone-600">06</span>
+                        <h3 class="text-3xl serif italic mt-4 text-stone-200 group-hover:text-white transition">Instinctual Realities</h3>
+                    </div>
+                    <p class="text-stone-500 text-sm font-light leading-relaxed">The biological drives that dictate where our energy is consistently focused.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Types Grid Section -->
+    <section id="core-types" class="py-32 px-6 md:px-20 bg-[#0e0e0e] border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24 section-fade-in">
+                <h2 class="text-5xl md:text-7xl serif italic text-white mb-6">Core Types</h2>
+                <div class="w-24 h-px bg-white/10 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-3 md:grid-cols-9 gap-4 md:gap-8 section-fade-in">
+                <a href="#" class="aspect-square flex items-center justify-center border border-white/5 hover:border-white/40 hover:bg-white/5 transition duration-500 text-3xl serif italic">1</a>
+                <a href="#" class="aspect-square flex items-center justify-center border border-white/5 hover:border-white/40 hover:bg-white/5 transition duration-500 text-3xl serif italic">2</a>
+                <a href="#" class="aspect-square flex items-center justify-center border border-white/5 hover:border-white/40 hover:bg-white/5 transition duration-500 text-3xl serif italic">3</a>
+                <a href="#" class="aspect-square flex items-center justify-center border border-white/5 hover:border-white/40 hover:bg-white/5 transition duration-500 text-3xl serif italic">4</a>
+                <a href="#" class="aspect-square flex items-center justify-center border border-white/20 bg-white/10 transition duration-500 text-3xl serif italic text-white ring-1 ring-white/10">5</a>
+                <a href="#" class="aspect-square flex items-center justify-center border border-white/5 hover:border-white/40 hover:bg-white/5 transition duration-500 text-3xl serif italic">6</a>
+                <a href="#" class="aspect-square flex items-center justify-center border border-white/5 hover:border-white/40 hover:bg-white/5 transition duration-500 text-3xl serif italic">7</a>
+                <a href="#type-eight" class="aspect-square flex items-center justify-center border border-white/20 hover:border-white/60 bg-white/[0.03] transition duration-500 text-3xl serif italic text-white">8</a>
+                <a href="#type-nine" class="aspect-square flex items-center justify-center border border-white/20 hover:border-white/60 bg-white/[0.03] transition duration-500 text-3xl serif italic text-white">9</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive: Type 8 -->
+    <section id="type-eight" class="py-32 px-6 md:px-20 max-w-7xl mx-auto section-fade-in">
+        <div class="grid md:grid-cols-2 gap-20">
+            <div class="sticky top-32 h-fit">
+                <span class="text-[10px] uppercase tracking-[0.5em] text-stone-500 mb-6 block">Core Type Eight</span>
+                <h2 class="text-5xl md:text-7xl serif italic mb-4 text-white">Gut-Rejection</h2>
+                <h3 class="text-xl serif italic text-stone-500 mb-8 leading-relaxed">The Whale, Self-Ordained Autocrat, The Mountain</h3>
+                <div class="w-20 h-px bg-white/20 mb-8"></div>
+                <p class="text-stone-400 font-light text-lg leading-relaxed italic mb-10">
+                    "#8 forms the point of fixation with power and autonomy in its purest form - separating the will of the self from all else and continuously expanding its reach."
+                </p>
+                
+                <!-- Hidden Triads Mini-Grid -->
+                <div class="grid grid-cols-2 gap-x-12 gap-y-6">
+                    <div class="border-l border-white/10 pl-6 py-2">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-600 block mb-1">Gut (8, 9, 1)</span>
+                        <p class="text-[10px] text-stone-400 font-light">The stable point in the gut center.</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-6 py-2">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-600 block mb-1">Assertive (3, 7, 8)</span>
+                        <p class="text-[10px] text-stone-400 font-light">Expanding reach to obtain goals.</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-6 py-2">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-600 block mb-1">Rejection (2, 5, 8)</span>
+                        <p class="text-[10px] text-stone-400 font-light">Rejecting vulnerability and personal needs.</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-6 py-2">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-600 block mb-1">Reactive (4, 6, 8)</span>
+                        <p class="text-[10px] text-stone-400 font-light">High-conflict, intensity-driven response.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-16 text-stone-300 font-light leading-relaxed">
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest text-white mb-6">The Mechanism of Eight</h4>
+                    <p class="mb-6">This type rejects the gut center’s need for tranquil consistency in favor of constant movement toward immediate impulses and protection of core boundaries. They assert willpower and physical control, fundamentally believing their own story as fact and trampling competing narratives seen as offenses.</p>
+                    <p>Unlike 9 who withdraws, 8 finds it difficult to disconnect; the sense of self is tied to how one expands and controls boundaries externally. This creates a hardened impermeability in the gut intelligence center.</p>
+                </div>
+
+                <div class="p-8 bg-white/[0.02] border border-white/5">
+                    <h4 class="text-xs uppercase tracking-widest text-white mb-6">Key Qualities</h4>
+                    <ul class="space-y-4 text-sm text-stone-400">
+                        <li class="flex gap-4"><span>—</span> Unquestionable "largeness" felt in presence.</li>
+                        <li class="flex gap-4"><span>—</span> Identifying false integrity in others and environment.</li>
+                        <li class="flex gap-4"><span>—</span> Rejecting personal needs for protection in favor of toughness.</li>
+                        <li class="flex gap-4"><span>—</span> Reveals hidden conflicts through generating overt conflict.</li>
+                        <li class="flex gap-4"><span>—</span> Insensitivity to softer emotions as vulnerability is "kept for self."</li>
+                        <li class="flex gap-4"><span>—</span> Brutish, retaliatory struggle with defeat.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest text-white mb-6">The Will to Power</h4>
+                    <p class="mb-6">For the 8, the will to power is the will to live. Reality and its contingencies are merely means to an end. Admission of weakness is something "others do," while the 8 redirects attention to increasing capacity and control.</p>
+                    <p>They replace the fear of vulnerability by guarding the softest part of the gut—the permeability of being—by becoming impenetrable. This reduces the gut's breadth of experience to a singular, instinctual command of strength.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10 pt-10 border-t border-white/5">
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-white mb-4">8w7</h4>
+                        <span class="text-[10px] text-stone-500 block mb-2">The Unstoppable Force</span>
+                        <p class="text-sm text-stone-500 italic mb-4">Distrusts the gut’s efficacy in immediate reaction. Prioritizes future planning. Verbally assertive, bratty, and creative. Causes mental exhaustion in others.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-white mb-4">8w9</h4>
+                        <span class="text-[10px] text-stone-500 block mb-2">The Immovable Object</span>
+                        <p class="text-sm text-stone-500 italic mb-4">Trusts the body's immediate response. Relaxes until action is necessary. Physically grounded, more non-verbal, and quietly "scary."</p>
+                    </div>
+                </div>
+
+                <div class="pt-10">
+                    <p class="text-xs uppercase tracking-widest text-stone-600 mb-4">The Narrative</p>
+                    <p class="serif text-2xl italic text-white leading-tight">Constant climbing of the mountain. More presence. More real. More intense.</p>
+                    <p class="text-stone-500 mt-4 text-sm">"At the top, I will be able to tend to the vulnerable, but until then, time isn't to be wasted on nuances of emotionality."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive: Type 9 -->
+    <section id="type-nine" class="py-32 px-6 md:px-20 max-w-7xl mx-auto section-fade-in">
+        <div class="grid md:grid-cols-2 gap-20">
+            <div class="sticky top-32 h-fit">
+                <span class="text-[10px] uppercase tracking-[0.5em] text-stone-500 mb-6 block">Core Type Nine</span>
+                <h2 class="text-5xl md:text-7xl serif italic mb-4 text-white">The Hypnagogue</h2>
+                <h3 class="text-xl serif italic text-stone-500 mb-8 leading-relaxed">The Empath, The Kaleidoscope, The Boundary Between Blindness and Enlightenment</h3>
+                <div class="w-20 h-px bg-white/20 mb-8"></div>
+                <p class="text-stone-400 font-light text-lg leading-relaxed italic mb-10">
+                    "The point of attachment to the question of existence. Wavering between integrated presence and dissociation from control of boundaries and movement."
+                </p>
+                
+                <!-- Hidden Triads Mini-Grid -->
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="border-l border-white/10 pl-6 py-2">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-600 block mb-1">Gut (8, 9, 1)</span>
+                        <p class="text-xs text-stone-400 font-light">Center of Energy that processes the quality of presence and being.</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-6 py-2">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-600 block mb-1">Withdrawn (9, 4, 5)</span>
+                        <p class="text-xs text-stone-400 font-light">Removing selfhood from the world to protect transformation and harmony.</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-6 py-2">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-600 block mb-1">Attachment (9, 3, 6)</span>
+                        <p class="text-xs text-stone-400 font-light">Identification with the merging point between people; hyper-individuation vs overadaptation.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-16 text-stone-300 font-light leading-relaxed">
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest text-white mb-6">The Mechanism of Nine</h4>
+                    <p class="mb-6">9 is fixated on identifying the right emotional place for the body and psyche. Boundaries, experiences, and connections are experienced as potential places of integration and/or confusion and decay. They prioritize the maintenance of an internal state away from the changes of the world.</p>
+                    <p>This creates a path of least resistance to keep the consistency of an inner world that allows them to stay in touch with themselves and the universe on their terms. This usually requires minimizing certain needs that would be too tense to engage with directly and delaying reactions to sustain inner harmony.</p>
+                </div>
+
+                <div class="p-8 bg-white/[0.02] border border-white/5">
+                    <h4 class="text-xs uppercase tracking-widest text-white mb-6">Key Qualities</h4>
+                    <ul class="space-y-4 text-sm text-stone-400">
+                        <li class="flex gap-4"><span>—</span> Withdrawing from the Gut center’s need for presence.</li>
+                        <li class="flex gap-4"><span>—</span> Perceiving the subtleties and "vibes" of relationships and unspoken characteristics.</li>
+                        <li class="flex gap-4"><span>—</span> Erasing the self’s need for boundaries in favor of a more holistic perception.</li>
+                        <li class="flex gap-4"><span>—</span> Feeling boundaries expand and shrink based on the qualities of changes that penetrate being.</li>
+                        <li class="flex gap-4"><span>—</span> Maintaining instinctual desirability by becoming perfect mirrors to partners.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest text-white mb-6">The Shadow Will</h4>
+                    <p class="mb-6">The core issue of 9 is dissociation from commitment to existence within their own beliefs and needs. While they let others have their way to reach harmony, this causes a shadow aspect of willfulness (the -3 line), leading to grudges or pent-up aggression.</p>
+                    <p>They have a bipolar relationship with being noticed: deeply desiring connection, yet oversensitive to being called-out or challenged, which triggers a retreat into the inner world.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10 pt-10 border-t border-white/5">
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-white mb-4">9w8</h4>
+                        <p class="text-sm text-stone-500 italic mb-4">Identified with being in control of their experience. Rejects the need to move or alter their basic state. Like a snapping turtle descending into its shell; non-verbal, unmoved, and reactive.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-white mb-4">9w1</h4>
+                        <p class="text-sm text-stone-500 italic mb-4">Identified with being righteousness. Dissociates to process anger through justifications and evaluation. receipt-based mentality and exchange of energy. More calculating and philosophical.</p>
+                    </div>
+                </div>
+
+                <div class="pt-10">
+                    <p class="text-xs uppercase tracking-widest text-stone-600 mb-4">The Narrative</p>
+                    <p class="serif text-2xl italic text-white leading-tight">The individualist split between the relaxed state of undisturbed existence and the shocks of reality.</p>
+                    <p class="text-stone-500 mt-4 text-sm">Capable of seeing themselves in everyone naturally, yet sometimes blaming others for a lack of action on their own part due to self-erasure in moments that disrupt homeostasis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive: Type 5 -->
+    <section class="py-32 px-6 md:px-20 max-w-7xl mx-auto section-fade-in">
+        <div class="grid md:grid-cols-2 gap-20">
+            <div class="sticky top-32 h-fit">
+                <span class="text-[10px] uppercase tracking-[0.5em] text-stone-500 mb-6 block">Deep Dive</span>
+                <h2 class="text-5xl md:text-7xl serif italic mb-8 text-white">The Observant Fixation</h2>
+                <div class="w-20 h-px bg-white/20 mb-8"></div>
+                <p class="text-stone-400 font-light text-lg leading-relaxed italic">
+                    "Interested in pure insight without obligation for Truth or communication."
+                </p>
+            </div>
+            <div class="space-y-16 text-stone-300 font-light leading-relaxed">
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest text-white mb-4">The Split of Type Five</h4>
+                    <p>The 5 is characterized by a removal of the complexity of irrational aspects of being and an over-clarification of the conceptual source of its origin. They are often detached and uninvolved with life and their own basic needs, focusing instead on skills, methods, and systems.</p>
+                </div>
+                <div class="grid gap-8">
+                    <div class="p-8 bg-white/[0.02] border border-white/5">
+                        <h5 class="serif text-xl mb-4 italic text-white">Specific Fixations</h5>
+                        <ul class="space-y-4 text-sm text-stone-400">
+                            <li class="flex gap-4"><span>—</span> Focuses on specifics and details, struggling with generalities.</li>
+                            <li class="flex gap-4"><span>—</span> Marked intensity in the eyes and facial muscles paired with body disconnection.</li>
+                            <li class="flex gap-4"><span>—</span> Cynical about new perspectives, assuming others can't comprehend their complexity.</li>
+                            <li class="flex gap-4"><span>—</span> Interested in deepening observation detached from all needs and attachments.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-white mb-4">5w6</h4>
+                        <p class="text-sm text-stone-500 italic">Movement toward the world and larger systems. Awareness of methodologies and relationships. Curiosity leans into sciences.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-white mb-4">5w4</h4>
+                        <p class="text-sm text-stone-500 italic">Movement away from the world. Dissatisfaction with the material world coupled with obsession on dissecting "essence."</p>
+                    </div>
+                </div>
+                <div class="pt-10 border-t border-white/5">
+                    <p class="text-xs uppercase tracking-widest text-stone-600 mb-4">Core Vice</p>
+                    <p class="serif text-2xl italic text-white">The Vice of Neglect</p>
+                    <p class="text-stone-500 mt-2">Automation of existence through methods, to covertly take control and gain leverage over the world without involvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="bg-[#0a0a0a] py-32 px-6 md:px-20 border-y border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-20">
+            <div class="md:w-1/3">
+                <h2 class="text-5xl serif italic mb-10 text-white">Work <br>With Me</h2>
+                <p class="text-stone-500 font-light leading-relaxed">
+                    Personal analysis is the only way to truly unlock the "hidden" motivations of your type.
+                </p>
+            </div>
+            <div class="md:w-2/3 grid gap-12">
+                <div class="group cursor-pointer">
+                    <div class="flex justify-between items-end border-b border-white/10 pb-6 group-hover:border-white transition duration-500">
+                        <h3 class="text-3xl serif italic text-stone-200 group-hover:text-white transition">Typing Discovery</h3>
+                        <span class="text-stone-500 text-sm group-hover:text-white transition">$250</span>
+                    </div>
+                    <p class="mt-4 text-stone-500 font-light text-sm max-w-xl">A specialized deep-dive session to identify your core fixation, centers of energy, and instinctual stack.</p>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="flex justify-between items-end border-b border-white/10 pb-6 group-hover:border-white transition duration-500">
+                        <h3 class="text-3xl serif italic text-stone-200 group-hover:text-white transition">Integration Coaching</h3>
+                        <span class="text-stone-500 text-sm group-hover:text-white transition">$175/hr</span>
+                    </div>
+                    <p class="mt-4 text-stone-500 font-light text-sm max-w-xl">Regular sessions to break recurring patterns and re-establish a sense of wholeness beyond your type's reaction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="py-32 px-6 bg-[#0a0a0a]">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-5xl serif italic mb-16 text-white">Reimagine Yourself</h2>
+            <form class="grid grid-cols-1 gap-12 text-left">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="border-b border-white/10 py-4 focus-within:border-white transition">
+                        <label class="block text-[10px] uppercase tracking-widest text-stone-600 mb-2">Full Name</label>
+                        <input type="text" class="w-full bg-transparent outline-none font-light text-lg text-white">
+                    </div>
+                    <div class="border-b border-white/10 py-4 focus-within:border-white transition">
+                        <label class="block text-[10px] uppercase tracking-widest text-stone-600 mb-2">Email Address</label>
+                        <input type="email" class="w-full bg-transparent outline-none font-light text-lg text-white">
+                    </div>
+                </div>
+                <div class="border-b border-white/10 py-4 focus-within:border-white transition">
+                    <label class="block text-[10px] uppercase tracking-widest text-stone-600 mb-2">Message</label>
+                    <textarea rows="3" class="w-full bg-transparent outline-none font-light text-lg text-white resize-none"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="border border-white/20 px-20 py-5 text-[10px] uppercase tracking-[0.4em] hover:bg-white hover:text-black transition duration-500 text-white">Connect</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-[#070707] px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
+            <div class="text-sm tracking-[0.4em] uppercase font-light text-white">
+                The <span class="font-bold">Hidden</span> Enneagram
+            </div>
+            <div class="text-[9px] uppercase tracking-[0.2em] text-stone-600 text-center">
+                &copy; 2025 The Hidden Enneagram. <br class="md:hidden"> All Rights Reserved.
+            </div>
+            <div class="flex gap-8 text-[9px] uppercase tracking-[0.2em] text-stone-500">
+                <a href="#" class="hover:text-white transition">Instagram</a>
+                <a href="#" class="hover:text-white transition">Newsletter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-fade-in').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        
+        menuBtn.addEventListener('click', () => {
+            const mobileMenu = document.createElement('div');
+            mobileMenu.className = 'fixed inset-0 bg-black z-[100] p-10 flex flex-col gap-8 text-xl uppercase tracking-widest font-light overflow-y-auto custom-scrollbar';
+            mobileMenu.innerHTML = `
+                <button class="absolute top-6 right-6 text-stone-500 text-2xl" onclick="this.parentElement.remove()">✕</button>
+                <a href="#home" onclick="this.parentElement.remove()" class="text-white border-b border-white/5 pb-2">Home</a>
+                <div class="flex flex-col gap-4">
+                    <span class="text-stone-600 text-xs uppercase tracking-widest">Learn</span>
+                    <a href="#core-types" class="pl-4 text-stone-300" onclick="this.parentElement.parentElement.remove()">Core Types</a>
+                    <a href="#centers" class="pl-4 text-stone-300" onclick="this.parentElement.parentElement.remove()">Centers of Energy</a>
+                    <a href="#" class="pl-4 text-stone-500">Core Fixation</a>
+                    <a href="#" class="pl-4 text-stone-500">Wings</a>
+                    <a href="#" class="pl-4 text-stone-500">Triads</a>
+                    <a href="#" class="pl-4 text-stone-500">Instinctual Realities</a>
+                </div>
+                <a href="#about" onclick="this.parentElement.remove()" class="text-white border-b border-white/5 pb-2">About</a>
+                <a href="#services" onclick="this.parentElement.remove()" class="text-white border-b border-white/5 pb-2">Services</a>
+            `;
+            document.body.appendChild(mobileMenu);
+        });
+    </script>
+</body>
+</html>
